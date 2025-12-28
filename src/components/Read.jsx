@@ -1,24 +1,32 @@
 import {   useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { showUser } from "../features/userDetailSlice"
+import { deleteUser, showUser } from "../features/userDetailSlice"
 import CustomModel from "./CustomModel";
+import { Link } from "react-router-dom";
  
 
  
 
 const Read = () => {
-    const dispatch = useDispatch();
-    const {users,loading} = useSelector((state)=>state.app)
+    const dispatch = useDispatch(); 
+
+    const {users,loading} = useSelector((state)=>state.app);
+
+    
     useEffect(() => {
       dispatch(showUser())
       
     }, [dispatch]);
+
     
     const [id,setId] = useState(null);
+
     const [showPopup,setPopup] = useState(false);
+
   if(loading){
     return (<h2>Loading....</h2>)
   };
+ 
  
   return (
     
@@ -60,12 +68,16 @@ const Read = () => {
   </div>
   
   <div className="bg-gray-100 px-6 py-4 flex gap-3">
-    <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition-colors">
+    <Link to={`/edit/${user.id}`} className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition-colors">
       Edit
-    </button>
-    <button className="flex-1 bg-red-600 hover:bg-red-700 text-white font-medium py-2 rounded-lg transition-colors">
+    </Link>
+    <Link onClick={()=>{
+      if(window.confirm(`Are sure want to delete ${user.name}`)){
+        dispatch(deleteUser(user.id));
+      }
+    }} className="flex-1 bg-red-600 hover:bg-red-700 text-white font-medium py-2 rounded-lg transition-colors">
       Delete
-    </button>
+    </Link>
   </div>
  </div>
  ))

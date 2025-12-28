@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { useParams } from "react-router-dom";
 
 
 //create action
@@ -31,7 +32,46 @@ export const showUser = createAsyncThunk("showUser",async(rejectWithValue)=>{
     } catch (error) {
         return rejectWithValue(error)
     }
-})
+});
+
+//delete action 
+ 
+
+export const deleteUser = createAsyncThunk("deleteUser",async(id,rejectWithValue)=>{
+    const res = await fetch(`https://694eca3db5bc648a93c14c99.mockapi.io/CRUD/${id}`,{
+        method:"DELETE"
+    });
+
+    try {
+         const result = await res.json();
+         return result;
+    } catch (error) {
+        return rejectWithValue(error);
+    }
+});
+
+//update action
+
+
+export const updateUser  = createAsyncThunk("updateUser",async(updateData,rejectWithValue)=>{ 
+    console.log(updateData);
+    
+    const response = await fetch(`https://694eca3db5bc648a93c14c99.mockapi.io/CRUD/${updateData.id}`,{
+        method:"PUT", 
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify(updateData)
+    });
+
+ try {
+    const result = await response.json();
+    return result;
+ } catch (error) {
+    return rejectWithValue(error);
+ }
+
+});
 
 
  const userDetail = createSlice({
@@ -63,6 +103,40 @@ export const showUser = createAsyncThunk("showUser",async(rejectWithValue)=>{
             state.users = action.payload
         })
         .addCase(showUser.rejected,(state,action)=>{
+            state.loading = false;
+             state.error  = action.payload || "something went wrong!"
+        })
+        
+      
+        .addCase(deleteUser.pending,(state)=>{
+            state.loading= true;
+        })
+        .addCase(deleteUser.fulfilled,(state,action)=>{
+            state.loading= false;
+            const {id}= action.payload;
+            if(id){
+                state.users = state.users.filter(user=>user.id !== id);
+            }
+           console.log(action.payload);
+           
+            
+        })
+        .addCase(deleteUser.rejected,(state,action)=>{
+            state.loading = false;
+             state.error  = action.payload || "something went wrong!"
+        })
+        
+        .addCase(updateUser.pending,(state)=>{
+            state.loading= true;
+        })
+        .addCase(updateUser.fulfilled,(state,action)=>{
+            state.loading= false;
+            state.users = state.users.map(user=>(
+                user.id === action.payload.id ? action.payload : user
+            ));           
+            
+        })
+        .addCase(updateUser.rejected,(state,action)=>{
             state.loading = false;
              state.error  = action.payload || "something went wrong!"
         })
