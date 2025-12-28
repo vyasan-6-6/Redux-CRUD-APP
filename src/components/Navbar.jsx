@@ -1,6 +1,9 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
-const Navbar = () => {
+const Navbar = () => { 
+  const allUsers = useSelector((state)=>state.app.users)
   return (
 <nav className="  text-black shadow-lg">
   <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
@@ -12,8 +15,8 @@ const Navbar = () => {
 
     {/* Menu Links */}
     <ul className="flex gap-6">
-      <li><i className="fas fa-home"></i> <a href="#post" className="hover:text-blue-200 transition">Post</a></li>
-      <li><i className="fas fa-list"></i> <a href="#all-post" className="hover:text-blue-200 transition">All Post</a></li>
+      <li> <Link to="/"  className="hover:text-blue-200 transition">Create Post</Link><i className="fas fa-plus"></i></li>
+      <li><i className="fas fa-list"></i> <Link to="/read"   className="hover:text-blue-200 transition">All Post ({allUsers.length})</Link></li>
     </ul>
 
     {/* Search and Button */}

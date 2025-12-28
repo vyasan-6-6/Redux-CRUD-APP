@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { createUser } from "../features/userDetailSlice";
+import { useNavigate } from "react-router-dom";
 
  
 const Create = ( ) => {
   const [users,setUsers] = useState({});
   const dispatch = useDispatch()
-
+const navigate = useNavigate()
   const getUserData = (e)=>{
     setUsers({...users,[e.target.name]:e.target.value})
     
@@ -16,6 +17,8 @@ const Create = ( ) => {
     console.log("users", users);
     e.preventDefault()
     dispatch(createUser(users));
+    setUsers({});
+    navigate('/read')
   }
 
   useEffect(()=>{
@@ -33,6 +36,7 @@ const Create = ( ) => {
       <label className="block text-gray-700 font-medium mb-2">Name</label>
       <input
       name="name"
+      value={users.name||""}
         type="text"
         placeholder="Enter your name"
         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" onChange={getUserData}
@@ -44,6 +48,7 @@ const Create = ( ) => {
       <label className="block text-gray-700 font-medium mb-2">Email</label>
       <input
       name="email"
+      value={users.email||""}
         type="email"
         placeholder="Enter your email"
         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" onChange={getUserData}
@@ -55,6 +60,7 @@ const Create = ( ) => {
       <label className="block text-gray-700 font-medium mb-2">Age</label>
       <input
       name="age"
+      value={users.age||''}
         type="number"
         placeholder="Enter your age"
         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" onChange={getUserData}
@@ -71,6 +77,7 @@ const Create = ( ) => {
             id="male"
             name="gender"
             value="male"
+            checked={users.gender === "male"}
             className="w-4 h-4 text-blue-600 cursor-pointer" onChange={getUserData}
           />
           <label htmlFor="male" className="ml-2 cursor-pointer text-gray-700">Male</label>
@@ -81,6 +88,7 @@ const Create = ( ) => {
             id="female"
             name="gender"
             value="female"
+            checked={users.gender === "female"}
             className="w-4 h-4 text-blue-600 cursor-pointer" onChange={getUserData}
           />
           <label htmlFor="female" className="ml-2 cursor-pointer text-gray-700">Female</label>
