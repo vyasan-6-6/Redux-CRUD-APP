@@ -68,16 +68,18 @@ const Read = () => {
   </div>
   
   <div className="bg-gray-100 px-6 py-4 flex gap-3">
-    <Link to={`/edit/${user.id}`} className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition-colors">
+    <Link to={`/edit/${user.id}`} 
+       className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition-colors flex justify-center items-center"
+      >
       Edit
     </Link>
-    <Link onClick={()=>{
+    <button onClick={()=>{
       if(window.confirm(`Are sure want to delete ${user.name}`)){
         dispatch(deleteUser(user.id));
       }
     }} className="flex-1 bg-red-600 hover:bg-red-700 text-white font-medium py-2 rounded-lg transition-colors">
       Delete
-    </Link>
+    </button>
   </div>
  </div>
  ))
