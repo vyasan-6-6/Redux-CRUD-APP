@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+ 
 import { useDispatch, useSelector } from "react-redux";
-import { createUser } from "../features/userDetailSlice";
+import { createUser } from "../reducers/userDetailSlice";
 import { useNavigate } from "react-router-dom";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import validationShema from "../validation/CreateValidation";

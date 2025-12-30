@@ -1,4 +1,4 @@
-import  userDetail  from "../features/userDetailSlice";
+import userDetail from "../reducers/userDetailSlice"
 import { configureStore } from "@reduxjs/toolkit";
 
 export const store = configureStore({

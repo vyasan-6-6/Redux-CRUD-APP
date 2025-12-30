@@ -1,7 +1,7 @@
 import {   useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react";
-import { showUser, updateUser } from "../features/userDetailSlice";
+import { showUser, updateUser } from "../reducers/userDetailSlice";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import validationSchema from "../validation/UpdateValidation"
 

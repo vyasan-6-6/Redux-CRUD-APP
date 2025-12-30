@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { useParams } from "react-router-dom";
+ 
 
 
 //create action
@@ -80,7 +80,17 @@ export const updateUser  = createAsyncThunk("updateUser",async(updateData,reject
         users:[],
         loading:false,
         error:null,
+        searchData:''
     },
+    
+     reducers:{
+        searchUser:(state,action)=>{
+            console.log(action.payload);
+           state.searchData = action.payload;
+           
+        }
+     },
+
     extraReducers: (builder)=>{
         builder
         .addCase(createUser.pending,(state)=>{
@@ -146,5 +156,5 @@ export const updateUser  = createAsyncThunk("updateUser",async(updateData,reject
 });
   
 
-// export const {} = userDetail.actions;
+export const {searchUser} = userDetail.actions;
 export default userDetail.reducer;

@@ -1,9 +1,18 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
+import { searchUser } from '../reducers/userDetailSlice';
+ 
 
 const Navbar = () => { 
-  const allUsers = useSelector((state)=>state.app.users)
+  const allUsers = useSelector((state)=>state.app.users);
+  const [searchData,setSearchData] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+  dispatch(searchUser(searchData))
+  },[searchData])
   return (
 <nav className="  text-black shadow-lg">
   <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
@@ -25,6 +34,8 @@ const Navbar = () => {
         <input 
           type="text" 
           placeholder="Search..." 
+          onChange={(e)=>setSearchData(e.target.value)}
+          onFocus={()=>{navigate("/read")}}
           className="px-4 py-2 rounded text-gray-800 focus:outline-none w-40"
         />
         <button className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-800">
